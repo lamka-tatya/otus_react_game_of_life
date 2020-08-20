@@ -14,7 +14,7 @@ export const SettingsStory: FC = () => {
     <SettingsPanel
       setIsSettingsVisible={action("Set settings visibility")}
       setSettings={action("Set settings")}
-      visible={boolean("Visible", false)}
+      visible={boolean("Visible", true)}
       settings={
         {
           height: number("Height", 300, undefined, "Settings"),
