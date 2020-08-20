@@ -1,50 +1,19 @@
 import React, { FC } from "react";
 import {
-  FieldsetStyled,
-  FieldStyled,
-  FieldsContainer,
   FormStyled,
   ButtonsContainer,
   FieldContainer,
   LabelStyled,
-  OverlayStyled,
-  OverlayChildrenStyled,
-  ImageStyled,
+  FieldStyled,
+  FieldsContainer,
 } from "./SettingsPanel.styles";
 import { Formik } from "formik";
-import VArrowsImg from "./assets/v_arrows_svg.svg";
-import HArrowsImg from "./assets/h_arrows_svg.svg";
 import CancelImg from "./assets/cancel_svg.svg";
 import OkImg from "./assets/ok_svg.svg";
-import { ImageButton } from "@/components/ImageButton/ImageButton";
 import { GameSettings } from ".";
-
-const XYSettingsSet: FC<{
-  legend: string;
-  ySettingName: string;
-  xSettngName: string;
-}> = ({ legend, ySettingName, xSettngName }) => (
-  <FieldsetStyled>
-    <legend>{legend}</legend>
-    <FieldsContainer>
-      <FieldContainer>
-        <ImageStyled src={VArrowsImg} />
-        <FieldStyled type="number" name={ySettingName} />
-      </FieldContainer>
-      <FieldContainer>
-        <ImageStyled src={HArrowsImg} />
-        <FieldStyled type="number" name={xSettngName} />
-      </FieldContainer>
-    </FieldsContainer>
-  </FieldsetStyled>
-);
-
-const Overlay: FC = ({ children }) => (
-  <>
-    <OverlayStyled />
-    <OverlayChildrenStyled>{children}</OverlayChildrenStyled>
-  </>
-);
+import { XYSettingsSet } from "./XYSettingsSet";
+import { ImageButton } from "@/components/ImageButton";
+import { Overlay } from "./Overlay";
 
 export const SettingsPanel: FC<{
   visible: boolean;
@@ -75,7 +44,6 @@ export const SettingsPanel: FC<{
             ySettingName="rowCount"
             xSettngName="columnCount"
           />
-
           <FieldsContainer>
             <FieldContainer>
               <LabelStyled>Частота, х100 мсек</LabelStyled>
