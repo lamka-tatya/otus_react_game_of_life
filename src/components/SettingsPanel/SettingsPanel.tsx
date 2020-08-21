@@ -57,13 +57,14 @@ export const SettingsPanel: FC<{
 
           <ButtonsContainer>
             <ImageButton
-              // type="button"
-              onClick={() => setIsSettingsVisible(false)}
+              type="button"
+			  onClick={() => setIsSettingsVisible(false)}
+			  key="closeBtn"
               src={CancelImg}
             ></ImageButton>
             <ImageButton
-              // type="submit"
-              key="submitBtn"
+			  type="submit"
+			  key="submitBtn"
               src={OkImg}
             ></ImageButton>
           </ButtonsContainer>

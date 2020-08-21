@@ -14,7 +14,7 @@ export const ImageButtonStory: FC = () => {
   return (
     <ImageButton
       onClick={action("Click")}
-     // type={select("Type", {submit:"submit", reset:"reset", button:"button"}, "submit")}
+      type={select("Type", {submit:"submit", reset:"reset", button:"button"}, "submit")}
 	  title={text('Title', 'title')}
 	  disabled={boolean('Disabled', false)}
     />
