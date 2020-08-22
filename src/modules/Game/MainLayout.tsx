@@ -18,36 +18,14 @@ export const MainLayout: FC<{
   onClickPlayPause: () => void;
   userName: string;
   isPlaying: boolean;
-
-  makeCellAlive: ({}) => void;
-  fieldHeight: number;
-  fieldWidht: number;
-  field: CellRow[];
-  cellHeight: number;
-  cellWidht: number;
 }> = ({
   onClickPlayPause,
   userName,
-  isPlaying,
-
-  makeCellAlive,
-  fieldHeight,
-  fieldWidht,
-  field,
-  cellHeight,
-  cellWidht,
+  isPlaying
 }) => (
   <MainContainer>
     <FieldContainer>
-      <Field
-        key="field"
-        makeCellAlive={makeCellAlive}
-        fieldHeight={fieldHeight}
-        fieldWidht={fieldWidht}
-        field={field}
-        cellHeight={cellHeight}
-        cellWidht={cellWidht}
-      />
+      <Field key="field" />
     </FieldContainer>
     <BottomContainer>
       <ButtonsContainer>

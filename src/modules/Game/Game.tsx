@@ -1,38 +1,42 @@
 import React, { FC, useState, useCallback } from "react";
 import { GameContainer } from "./Game.styles";
-
-import { Redirect } from "react-router-dom";
 import { MainLayout } from "./MainLayout";
 import { RightSideLayout } from "./RightSideLayout";
-import { SettingsPanel, GameSettings } from "@/components/SettingsPanel";
-import { User } from ".";
-import { CellState } from "@/components/Cell";
+import { SettingsPanel } from "@/components/SettingsPanel";
+import { connect } from "react-redux";
+import { AppState } from "@/store";
+import {
+  playGame,
+  stopGame,
+  setIsSettingsVisible,
+  reset,
+  setSettings,
+} from "./gameReducer";
 
-export const Game: FC<{
-  user: User;
-  onLogout: () => void;
-  isPlaying: boolean;
-  playGame: () => void;
-  stopGame: () => void;
-  setIsSettingsVisible: ({}) => void;
-  reset: () => void;
-  userpic: string | undefined;
-  isLogout: boolean;
-  logout: () => void;
-  setSettings: ({}) => void;
-  gameSettings: GameSettings;
-  isSettingsVisible: boolean;
-}> = ({
-  user,
-  onLogout,
+const mapStateToProps = (state: AppState) => ({
+  isPlaying: state.game.isPlaying,
+  userpic: state.game.userpic,
+  isSettingsVisible: state.game.isSettingsVisible,
+  gameSettings: state.game.settings,
+});
+
+const mapDispatchToProps = {
+  playGame,
+  stopGame,
+  setIsSettingsVisible,
+  reset,
+  setSettings,
+};
+
+type GameProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+
+const GameInternal: FC<GameProps> = ({
   isPlaying,
   playGame,
   stopGame,
   setIsSettingsVisible,
   reset,
   userpic,
-  isLogout,
-  logout,
   setSettings,
   gameSettings,
   isSettingsVisible,
@@ -41,7 +45,7 @@ export const Game: FC<{
 
   const onClickPlayPause = useCallback(() => {
     isPlaying ? stopGame() : playGame();
-  }, [stopGame, playGame]);
+  }, [isPlaying, stopGame, playGame]);
 
   const onClickSettings = useCallback(() => {
     setIsSettingsVisible(true);
@@ -51,14 +55,9 @@ export const Game: FC<{
     reset();
   }, [reset]);
 
-  const onDoLogout = useCallback(() => {
-    onLogout && onLogout();
-    logout();
-  }, [onLogout, logout]);
+  const onDoLogout = useCallback(() => {}, []);
 
-  return isLogout ? (
-    <Redirect to="/" push={true} />
-  ) : (
+  return (
     <>
       <SettingsPanel
         key="settingsWindow"
@@ -69,19 +68,9 @@ export const Game: FC<{
       />
       <GameContainer>
         <MainLayout
-          makeCellAlive={() => {}}
-          fieldHeight={200}
-          fieldWidht={200}
-          field={[
-            { cells: [CellState.alive, CellState.alive, CellState.alive] },
-            { cells: [CellState.dead, CellState.alive, CellState.dead] },
-            { cells: [CellState.alive, CellState.dead, CellState.alive] },
-          ]}
-          cellHeight={20}
-          cellWidht={20}
           onClickPlayPause={onClickPlayPause}
           isPlaying={isPlaying}
-          userName={user?.name ?? ""}
+          userName={"Hello!"}
         />
         <RightSideLayout
           onClickSettings={onClickSettings}
@@ -93,3 +82,5 @@ export const Game: FC<{
     </>
   );
 };
+
+export const Game = connect(mapStateToProps, mapDispatchToProps)(GameInternal);

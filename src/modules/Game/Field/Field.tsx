@@ -1,16 +1,29 @@
 import React, { FC, useCallback } from "react";
 import { RowStyled, FieldStyled } from "./Field.styles";
 import { Cell } from "@/components/Cell";
-import { CellRow } from "..";
+import { connect } from "react-redux";
+import { AppState } from "@/store";
+import {
+  setField,
+  makeCellAlive,
+  getCellHeight,
+  getCellWidth,
+} from "../gameReducer";
 
-export const Field: FC<{
-  makeCellAlive: ({}) => void;
-  fieldHeight: number;
-  fieldWidht: number;
-  field: CellRow[];
-  cellHeight: number;
-  cellWidht: number;
-}> = ({
+const mapStateToProps = (state: AppState) => ({
+  field: state.game.field,
+  fieldHeight: state.game.settings.height,
+  fieldWidht: state.game.settings.width,
+  cellHeight: getCellHeight(state),
+  cellWidht: getCellWidth(state),
+});
+
+const mapDispatchToProps = { setField, makeCellAlive };
+
+type FieldProps = ReturnType<typeof mapStateToProps> &
+  typeof mapDispatchToProps;
+
+const FieldInternal: FC<FieldProps> = ({
   makeCellAlive,
   fieldHeight,
   fieldWidht,
@@ -42,3 +55,8 @@ export const Field: FC<{
     </FieldStyled>
   );
 };
+
+export const Field = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FieldInternal);
