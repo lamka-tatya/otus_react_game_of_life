@@ -1,6 +1,6 @@
 import React from "react";
 import { Game } from ".";
-import { mount, ReactWrapper } from "enzyme";
+import { mount } from "enzyme";
 
 describe("Game tests", () => {
   const gameSettings = {
