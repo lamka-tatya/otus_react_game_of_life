@@ -16,10 +16,12 @@ import {
   getStoredUser,
 } from "./authReducer";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 const mapStateToProps = (state: AppState) => ({
   userName: state.auth.userName,
   userGender: state.auth.userGender,
+  user: state.auth.user,
 });
 const mapDispatchToProps = {
   setUserName,
@@ -33,6 +35,7 @@ type AuthProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 const AuthInternal: FC<AuthProps> = ({
   userName,
   userGender,
+  user,
   setUserName,
   setUserGender,
   setUser,
@@ -47,7 +50,7 @@ const AuthInternal: FC<AuthProps> = ({
   );
   const onChangeName = useCallback(
     (e: ChangeEvent) => {
-      setUserName((e.target as any).value);
+	  setUserName((e.target as any).value);
     },
     [setUserName]
   );
@@ -62,7 +65,9 @@ const AuthInternal: FC<AuthProps> = ({
     getStoredUser();
   }, [getStoredUser]);
 
-  return (
+  return user ? (
+    <Redirect to="/game" push={true} />
+  ) : (
     <FormStyled name="authForm" onSubmit={onSubmit}>
       <NameContainer>
         <label>Привет, </label>

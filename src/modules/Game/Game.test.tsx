@@ -4,6 +4,8 @@ import { mount, ReactWrapper } from "enzyme";
 import configureStore from "redux-mock-store";
 import { Provider } from "react-redux";
 import { initGameState, setIsSettingsVisible, playGame } from "./gameReducer";
+import { localStorageAuth } from "../Auth/authService";
+import { BrowserRouter } from "react-router-dom";
 
 describe("Game tests", () => {
   let wrapper: ReactWrapper;
@@ -11,13 +13,25 @@ describe("Game tests", () => {
   const mockStore = configureStore([]);
 
   beforeEach(() => {
+    localStorageAuth.login({ name: "test", gender: "robot" });
+
     store = mockStore({
       game: initGameState,
+      auth: {
+        user: {
+          name: "test",
+          gender: "robot",
+        },
+        userName: "test",
+        userGender: "robot",
+      },
     });
 
     wrapper = mount(
       <Provider store={store}>
-        <Game />
+        <BrowserRouter>
+          <Game />
+        </BrowserRouter>
       </Provider>
     );
   });

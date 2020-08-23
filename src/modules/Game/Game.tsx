@@ -12,10 +12,12 @@ import {
   reset,
   setSettings,
 } from "./gameReducer";
+import { Redirect } from "react-router-dom";
 
 const mapStateToProps = (state: AppState) => ({
   isPlaying: state.game.isPlaying,
   userpic: state.game.userpic,
+  user: state.auth.user,
   isSettingsVisible: state.game.isSettingsVisible,
   gameSettings: state.game.settings,
 });
@@ -37,6 +39,7 @@ const GameInternal: FC<GameProps> = ({
   setIsSettingsVisible,
   reset,
   userpic,
+  user,
   setSettings,
   gameSettings,
   isSettingsVisible,
@@ -57,7 +60,7 @@ const GameInternal: FC<GameProps> = ({
 
   const onDoLogout = useCallback(() => {}, []);
 
-  return (
+  return user ? (
     <>
       <SettingsPanel
         key="settingsWindow"
@@ -70,7 +73,7 @@ const GameInternal: FC<GameProps> = ({
         <MainLayout
           onClickPlayPause={onClickPlayPause}
           isPlaying={isPlaying}
-          userName={"Hello!"}
+          userName={user.name}
         />
         <RightSideLayout
           onClickSettings={onClickSettings}
@@ -80,6 +83,8 @@ const GameInternal: FC<GameProps> = ({
         />
       </GameContainer>
     </>
+  ) : (
+    <Redirect to="/" />
   );
 };
 

@@ -14,6 +14,7 @@ function* getUser() {
 	if (user) {
 		yield put(setUserName(user.name));
 		yield put(setUserGender(user.gender));
+		yield put(setUser(user));
 	}
 }
 
