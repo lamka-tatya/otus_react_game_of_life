@@ -12,6 +12,7 @@ import {
   reset,
   setSettings,
 } from "./gameReducer";
+import { logout } from "@/modules/Auth";
 import { Redirect } from "react-router-dom";
 
 const mapStateToProps = (state: AppState) => ({
@@ -28,6 +29,7 @@ const mapDispatchToProps = {
   setIsSettingsVisible,
   reset,
   setSettings,
+  logout,
 };
 
 type GameProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -43,6 +45,7 @@ const GameInternal: FC<GameProps> = ({
   setSettings,
   gameSettings,
   isSettingsVisible,
+  logout
 }) => {
   const [] = useState(false);
 
@@ -58,7 +61,9 @@ const GameInternal: FC<GameProps> = ({
     reset();
   }, [reset]);
 
-  const onDoLogout = useCallback(() => {}, []);
+  const onDoLogout = useCallback(() => {
+    logout();
+  }, [logout]);
 
   return user ? (
     <>

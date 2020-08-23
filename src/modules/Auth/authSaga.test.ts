@@ -2,7 +2,7 @@ import { authSaga, createAvatar } from "./authSaga";
 import { rootReducer, initialAppState } from "@/store";
 import { expectSaga } from "redux-saga-test-plan";
 import { call } from "redux-saga/effects";
-import { setUser, getStoredUser } from "./authReducer";
+import { setUser, getStoredUser, logout } from "./authReducer";
 import { localStorageAuth } from "./authService";
 
 describe("Auth saga", () => {
@@ -71,5 +71,15 @@ describe("Auth saga", () => {
 
 		expect(result.storeState.auth.userName).toBe("");
 		expect(result.storeState.auth.userGender).toBe("robot");
+	});
+
+	it("should clear user items in local storage on logout", async () => {
+		await saga
+			.dispatch(setUser({ name: "test", gender: "female" }))
+			.dispatch(logout())
+			.run();
+
+		expect(localStorage.getItem(localStorageAuth.userNameKey)).toBeNull();
+		expect(localStorage.getItem(localStorageAuth.userGenderKey)).toBeNull();
 	});
 });

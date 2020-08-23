@@ -1,5 +1,5 @@
 import { takeEvery, put, call } from "redux-saga/effects";
-import { setUser, setUserName, setUserGender, getStoredUser } from "./authReducer";
+import { setUser, setUserName, setUserGender, getStoredUser, logout } from "./authReducer";
 import { localStorageAuth as authService } from "./authService";
 import { setUserpic } from "@/modules/Game";
 import Avatars, { SpriteCollection } from "@dicebear/avatars";
@@ -42,7 +42,12 @@ function* login({ payload }: ReturnType<typeof setUser>) {
 	authService.login(payload);
 }
 
+function* doLogout() {
+	authService.logout();
+}
+
 export function* authSaga() {
 	yield takeEvery(getStoredUser.type, getUser);
 	yield takeEvery(setUser.type, login);
+	yield takeEvery(logout.type, doLogout);
 }

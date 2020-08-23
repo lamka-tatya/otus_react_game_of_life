@@ -1,4 +1,4 @@
-import { authReducer, initAuthState, setUserGender, setUserName, setUser } from "./authReducer";
+import { authReducer, initAuthState, setUserGender, setUserName, setUser, logout } from "./authReducer";
 
 describe("Auth reducer", () => {
 	it("initial gender should be robot", () => {
@@ -44,4 +44,16 @@ describe("Auth reducer", () => {
 		});
 
 	});
+
+	it("logout should clear user and user name and set gender to default", () => {
+		const authState = authReducer(initAuthState, setUserName("test"));
+		const nextState = authReducer(authState, setUserGender("male"));
+		const state = authReducer(nextState, setUser({ name: "test", gender: "male" }));
+
+		const finalState = authReducer(state, logout());
+
+		expect(finalState.user).toBeNull();
+		expect(finalState.userGender).toBe("robot");
+		expect(finalState.userName).toBe("");
+	})
 });

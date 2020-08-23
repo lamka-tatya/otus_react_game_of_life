@@ -32,7 +32,12 @@ const authSlice = createSlice({
 				}
 			}
 		},
-		getStoredUser(_) { }
+		getStoredUser(_) { },
+		logout(state) {
+			state.userName = "";
+			state.userGender = "robot";
+			state.user = null;
+		 },
 	}
 });
 
@@ -41,5 +46,6 @@ export const {
 	setUserGender,
 	setUser,
 	getStoredUser,
+	logout,
 } = authSlice.actions;
 export const authReducer = authSlice.reducer;

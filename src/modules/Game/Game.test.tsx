@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { initGameState, setIsSettingsVisible, playGame } from "./gameReducer";
 import { localStorageAuth } from "../Auth/authService";
 import { BrowserRouter } from "react-router-dom";
+import { logout } from "../Auth";
 
 describe("Game tests", () => {
   let wrapper: ReactWrapper;
@@ -63,6 +64,22 @@ describe("Game tests", () => {
         expect.arrayContaining([
           expect.objectContaining({
             type: playGame.type,
+          }),
+        ])
+      );
+    });
+  });
+
+  describe("When click on quit button", () => {
+    it("should call logout", () => {
+      const playBtn = wrapper.findWhere((x) => x.key() === "logoutBtn");
+
+      playBtn.simulate("click");
+
+      expect(store.getActions()).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            type: logout.type,
           }),
         ])
       );
