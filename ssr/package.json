@@ -1,0 +1,15 @@
+{
+  "name": "learn-starter",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "next": "9.3.5",
+    "puppeteer-renderer-middleware": "^0.6.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  }
+}
