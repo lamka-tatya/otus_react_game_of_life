@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, ChangeEvent, useEffect } from "react";
 import {
   FormStyled,
   NameContainer,
@@ -8,14 +8,59 @@ import {
 import GameImg from "./assets/game.svg";
 import { ImageButton } from "@/components/ImageButton";
 import { Gender } from "@/modules/Game";
+import { AppState } from "@/store";
+import {
+  setUserName,
+  setUserGender,
+  setUser,
+  getStoredUser,
+} from "./authReducer";
+import { connect } from "react-redux";
 
-export const Auth: FC<{ userName?: string; userGender?: Gender }> = ({
+const mapStateToProps = (state: AppState) => ({
+  userName: state.auth.userName,
+  userGender: state.auth.userGender,
+});
+const mapDispatchToProps = {
+  setUserName,
+  setUserGender,
+  setUser,
+  getStoredUser,
+};
+
+type AuthProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+
+const AuthInternal: FC<AuthProps> = ({
   userName,
   userGender,
+  setUserName,
+  setUserGender,
+  setUser,
+  getStoredUser,
 }) => {
-  const onSubmit = useCallback(() => {}, []);
-  const onChangeName = useCallback(() => {}, []);
-  const onChangeGender = useCallback(() => {}, []);
+  const onSubmit = useCallback(
+    (evt) => {
+      evt.preventDefault();
+      setUser({ name: userName, gender: userGender });
+    },
+    [userName, userGender, setUser]
+  );
+  const onChangeName = useCallback(
+    (e: ChangeEvent) => {
+      setUserName((e.target as any).value);
+    },
+    [setUserName]
+  );
+  const onChangeGender = useCallback(
+    (e: ChangeEvent) => {
+      setUserGender((e.target as any).value as Gender);
+    },
+    [setUserGender]
+  );
+
+  useEffect(() => {
+    getStoredUser();
+  }, [getStoredUser]);
 
   return (
     <FormStyled name="authForm" onSubmit={onSubmit}>
@@ -62,3 +107,5 @@ export const Auth: FC<{ userName?: string; userGender?: Gender }> = ({
     </FormStyled>
   );
 };
+
+export const Auth = connect(mapStateToProps, mapDispatchToProps)(AuthInternal);

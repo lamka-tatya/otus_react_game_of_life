@@ -1,10 +1,10 @@
 import React, { FC } from "react";
-import { Game } from "./modules/Game";
 import { store } from "./store";
 import { Provider } from "react-redux";
+import { Auth } from "./modules/Auth";
 
 export const App: FC = () => (
   <Provider store={store}>
-    <Game/>
+    <Auth/>
   </Provider>
 );
