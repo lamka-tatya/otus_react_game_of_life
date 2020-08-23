@@ -26,7 +26,11 @@ export const SettingsPanel: FC<{
     setIsSettingsVisible(false);
   };
 
-  return visible ? (
+  if (!visible) {
+    return null;
+  }
+
+  return (
     <Overlay>
       <Formik
         initialValues={settings}
@@ -58,18 +62,18 @@ export const SettingsPanel: FC<{
           <ButtonsContainer>
             <ImageButton
               type="button"
-			  onClick={() => setIsSettingsVisible(false)}
-			  key="closeBtn"
+              onClick={() => setIsSettingsVisible(false)}
+              key="closeBtn"
               src={CancelImg}
             ></ImageButton>
             <ImageButton
-			  type="submit"
-			  key="submitBtn"
+              type="submit"
+              key="submitBtn"
               src={OkImg}
             ></ImageButton>
           </ButtonsContainer>
         </FormStyled>
       </Formik>
     </Overlay>
-  ) : null;
+  );
 };
