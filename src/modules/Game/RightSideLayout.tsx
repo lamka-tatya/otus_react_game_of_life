@@ -42,6 +42,6 @@ export const RightSideLayout: FC<{
         onClick={onLogout}
       ></ImageButton>
     </SettingsContainer>
-    {userPic && <ImageStyled src={userPic}></ImageStyled>}
+    {userPic && <ImageStyled key="userpic" src={userPic}></ImageStyled>}
   </RightSideContainer>
 );
