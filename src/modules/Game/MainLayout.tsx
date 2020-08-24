@@ -12,16 +12,23 @@ import BackImg from "./assets/back.svg";
 import ForwardImg from "./assets/forward.svg";
 import { Field } from "./Field/Field";
 import { ImageButton } from "@/components/ImageButton";
-import { CellRow } from ".";
 
 export const MainLayout: FC<{
   onClickPlayPause: () => void;
+  onClickNext: () => void;
+  onClickPrev: () => void;
   userName: string;
   isPlaying: boolean;
+  hasPrevStep: boolean;
+  hasNextStep: boolean;
 }> = ({
   onClickPlayPause,
+  onClickNext,
+  onClickPrev,
   userName,
-  isPlaying
+  isPlaying,
+  hasPrevStep,
+  hasNextStep,
 }) => (
   <MainContainer>
     <FieldContainer>
@@ -32,8 +39,10 @@ export const MainLayout: FC<{
         <ImageButton
           src={BackImg}
           type="button"
-          disabled={true}
+          disabled={!hasPrevStep}
           title="Previous state"
+          key="prev"
+          onClick={onClickPrev}
         ></ImageButton>
         <ImageButton
           key="playBtn"
@@ -46,7 +55,9 @@ export const MainLayout: FC<{
           src={ForwardImg}
           type="button"
           title="Next state"
-          disabled={true}
+          key="next"
+          disabled={!hasNextStep}
+          onClick={onClickNext}
         ></ImageButton>
       </ButtonsContainer>
       {userName}

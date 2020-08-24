@@ -1,5 +1,5 @@
 import React from "react";
-import { Game } from ".";
+import { Game, CellRow } from ".";
 import { mount, ReactWrapper } from "enzyme";
 import configureStore from "redux-mock-store";
 import { Provider } from "react-redux";
@@ -34,52 +34,109 @@ describe("Game tests", () => {
     );
   });
 
-  describe("When click on settings button", () => {
-    it("should call show settings form", () => {
-      const settingsBtn = wrapper.findWhere((x) => x.key() === "settingsBtn");
+  it("should call show settings form when click on settings button", () => {
+    const settingsBtn = wrapper.findWhere((x) => x.key() === "settingsBtn");
 
-      settingsBtn.simulate("click");
+    settingsBtn.simulate("click");
 
-      expect(store.getActions()).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            type: setIsSettingsVisible.type,
-            payload: true,
-          }),
-        ])
-      );
-    });
+    expect(store.getActions()).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          type: setIsSettingsVisible.type,
+          payload: true,
+        }),
+      ])
+    );
   });
 
-  describe("When click on play button", () => {
-    it("should change play|pause state", () => {
-      const playBtn = wrapper.findWhere((x) => x.key() === "playBtn");
+  it("should change play|pause state when click on play button", () => {
+    const playBtn = wrapper.findWhere((x) => x.key() === "playBtn");
 
-      playBtn.simulate("click");
+    playBtn.simulate("click");
 
-      expect(store.getActions()).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            type: playGame.type,
-          }),
-        ])
-      );
-    });
+    expect(store.getActions()).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          type: playGame.type,
+        }),
+      ])
+    );
   });
 
-  describe("When click on quit button", () => {
-    it("should call logout", () => {
-      const playBtn = wrapper.findWhere((x) => x.key() === "logoutBtn");
+  it("should call logout when click on quit button", () => {
+    const playBtn = wrapper.findWhere((x) => x.key() === "logoutBtn");
 
-      playBtn.simulate("click");
+    playBtn.simulate("click");
 
-      expect(store.getActions()).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            type: logout.type,
-          }),
-        ])
-      );
+    expect(store.getActions()).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          type: logout.type,
+        }),
+      ])
+    );
+  });
+
+  it("should enable history buttons when game is not playing and has history", () => {
+    store = mockStore({
+      game: {
+        ...initGameState,
+        history: [[], [], []],
+        currentHistoryStep: 1,
+      },
+      auth: {
+        user: {
+          name: "test",
+          gender: "robot",
+        },
+        userName: "test",
+        userGender: "robot",
+      },
     });
+
+    wrapper = mount(
+      <Provider store={store}>
+        <BrowserRouter>
+          <Game />
+        </BrowserRouter>
+      </Provider>
+    );
+
+    const nextBtn = wrapper.findWhere((x) => x.key() === "next");
+    const prevBtn = wrapper.findWhere((x) => x.key() === "prev");
+
+    expect(nextBtn.props().disabled).toBeFalsy();
+    expect(prevBtn.props().disabled).toBeFalsy();
+  });
+
+  it("should disable history buttons when game is playing", () => {
+    store = mockStore({
+      game: {
+        ...initGameState,
+        isPlaying: true
+      },
+      auth: {
+        user: {
+          name: "test",
+          gender: "robot",
+        },
+        userName: "test",
+        userGender: "robot",
+      },
+    });
+
+    wrapper = mount(
+      <Provider store={store}>
+        <BrowserRouter>
+          <Game />
+        </BrowserRouter>
+      </Provider>
+    );
+
+    const nextBtn = wrapper.findWhere((x) => x.key() === "next");
+    const prevBtn = wrapper.findWhere((x) => x.key() === "prev");
+
+    expect(nextBtn.props().disabled).toBeTruthy();
+    expect(prevBtn.props().disabled).toBeTruthy();
   });
 });
