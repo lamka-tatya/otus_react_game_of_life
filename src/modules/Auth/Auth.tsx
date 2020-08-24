@@ -50,7 +50,7 @@ const AuthInternal: FC<AuthProps> = ({
   );
   const onChangeName = useCallback(
     (e: ChangeEvent) => {
-	  setUserName((e.target as any).value);
+      setUserName((e.target as any).value);
     },
     [setUserName]
   );
@@ -70,7 +70,7 @@ const AuthInternal: FC<AuthProps> = ({
   ) : (
     <FormStyled name="authForm" onSubmit={onSubmit}>
       <NameContainer>
-        <label>Привет, </label>
+        <label key="hello">Привет, </label>
         <FieldStyled
           type="text"
           name="userName"
