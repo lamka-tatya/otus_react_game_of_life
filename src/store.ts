@@ -31,7 +31,7 @@ export const rootReducer = (state: any, action: any) => {
   return reducer(state, action);
 };
 
-function* rootSaga() {
+export function* rootSaga() {
   yield fork(gameSaga);
   yield fork(authSaga);
 }
