@@ -11,6 +11,9 @@ import {
   setIsSettingsVisible,
   reset,
   setSettings,
+  nextStep,
+  prevStep,
+  gameSelectors,
 } from "./gameReducer";
 import { logout } from "@/modules/Auth";
 import { Redirect } from "react-router-dom";
@@ -21,6 +24,8 @@ const mapStateToProps = (state: AppState) => ({
   user: state.auth.user,
   isSettingsVisible: state.game.isSettingsVisible,
   gameSettings: state.game.settings,
+  hasNextStep: gameSelectors.hasNextStep(state),
+  hasPrevStep: gameSelectors.hasPrevStep(state),
 });
 
 const mapDispatchToProps = {
@@ -30,6 +35,8 @@ const mapDispatchToProps = {
   reset,
   setSettings,
   logout,
+  nextStep,
+  prevStep,
 };
 
 type GameProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -45,10 +52,12 @@ const GameInternal: FC<GameProps> = ({
   setSettings,
   gameSettings,
   isSettingsVisible,
-  logout
+  logout,
+  nextStep,
+  prevStep,
+  hasPrevStep,
+  hasNextStep,
 }) => {
-  const [] = useState(false);
-
   const onClickPlayPause = useCallback(() => {
     isPlaying ? stopGame() : playGame();
   }, [isPlaying, stopGame, playGame]);
@@ -60,6 +69,14 @@ const GameInternal: FC<GameProps> = ({
   const onReset = useCallback(() => {
     reset();
   }, [reset]);
+
+  const onClickNext = useCallback(() => {
+    nextStep();
+  }, [nextStep]);
+
+  const onClickPrev = useCallback(() => {
+    prevStep();
+  }, [prevStep]);
 
   const onDoLogout = useCallback(() => {
     logout();
@@ -77,8 +94,12 @@ const GameInternal: FC<GameProps> = ({
       <GameContainer>
         <MainLayout
           onClickPlayPause={onClickPlayPause}
+          onClickNext={onClickNext}
+          onClickPrev={onClickPrev}
           isPlaying={isPlaying}
           userName={user.name}
+          hasPrevStep={hasPrevStep}
+          hasNextStep={hasNextStep}
         />
         <RightSideLayout
           onClickSettings={onClickSettings}
