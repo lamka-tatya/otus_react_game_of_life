@@ -6,3 +6,4 @@ node_modules
 /coverage/lcov-report/src/*
 /.stryker-tmp/*
 /reports/*
+/coverage/*
