@@ -58,8 +58,6 @@ const GameInternal: FC<GameProps> = ({
   hasPrevStep,
   hasNextStep,
 }) => {
-  const [] = useState(false);
-
   const onClickPlayPause = useCallback(() => {
     isPlaying ? stopGame() : playGame();
   }, [isPlaying, stopGame, playGame]);
