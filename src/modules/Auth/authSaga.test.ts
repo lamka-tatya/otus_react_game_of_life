@@ -3,13 +3,15 @@ import { rootReducer, initialAppState } from "@/store";
 import { expectSaga } from "redux-saga-test-plan";
 import { call } from "redux-saga/effects";
 import { setUser, getStoredUser, logout } from "./authReducer";
-import { localStorageAuth } from "./authService";
+import localStorageAuth from "./authService";
+jest.mock('./authService');
 
 describe("Auth saga", () => {
-	let saga: any;
 
+	let saga: any;
 	beforeEach(() => {
-		localStorage.clear();
+		jest.resetAllMocks();
+
 		saga = expectSaga(authSaga).withReducer(
 			rootReducer,
 			initialAppState
@@ -41,17 +43,17 @@ describe("Auth saga", () => {
 	});
 
 	it("should set user name and gender to local storage on setUser", async () => {
-		const result = await saga
+		await saga
 			.dispatch(setUser({ name: "test", gender: "female" }))
 			.run();
 
-		expect(localStorage.getItem(localStorageAuth.userNameKey)).toBe("test");
-		expect(localStorage.getItem(localStorageAuth.userGenderKey)).toBe("female");
+
+		const loginMock = <jest.Mock>(localStorageAuth.login);
+		expect(loginMock).toBeCalledWith({ name: "test", gender: "female" });
 	});
 
-	it("should set user name and gender to state form localstorage on getUser", async () => {
-		localStorage.setItem(localStorageAuth.userNameKey, "userName");
-		localStorage.setItem(localStorageAuth.userGenderKey, "male");
+	it("should set user name and gender to state form localStorageAuth on getUser", async () => {
+		(localStorageAuth.getLoggedInUser as jest.Mock).mockImplementation(() => { return { name: "userName", gender: "male" } });
 
 		const result = await saga
 			.dispatch(getStoredUser())
@@ -61,9 +63,8 @@ describe("Auth saga", () => {
 		expect(result.storeState.auth.userGender).toBe("male");
 	});
 
-	it("should not set user name and gender to state form localstorage on getUser if name is empty", async () => {
-		localStorage.setItem(localStorageAuth.userNameKey, "");
-		localStorage.setItem(localStorageAuth.userGenderKey, "male");
+	it("should not set user name and gender to state if there is not logged in user", async () => {
+		(localStorageAuth.getLoggedInUser as jest.Mock).mockImplementation(() => { return undefined });
 
 		const result = await saga
 			.dispatch(getStoredUser())
@@ -73,13 +74,13 @@ describe("Auth saga", () => {
 		expect(result.storeState.auth.userGender).toBe("robot");
 	});
 
-	it("should clear user items in local storage on logout", async () => {
+	it("should call authService.logout on logout", async () => {
 		await saga
 			.dispatch(setUser({ name: "test", gender: "female" }))
 			.dispatch(logout())
 			.run();
 
-		expect(localStorage.getItem(localStorageAuth.userNameKey)).toBeNull();
-		expect(localStorage.getItem(localStorageAuth.userGenderKey)).toBeNull();
+		const logoutMock = <jest.Mock>(localStorageAuth.logout);
+		expect(logoutMock).toBeCalledTimes(1);
 	});
 });

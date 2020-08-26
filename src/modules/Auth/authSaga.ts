@@ -1,6 +1,6 @@
 import { takeEvery, put, call } from "redux-saga/effects";
 import { setUser, setUserName, setUserGender, getStoredUser, logout } from "./authReducer";
-import { localStorageAuth as authService } from "./authService";
+import authService from "./authService";
 import { setUserpic } from "@/modules/Game";
 import Avatars, { SpriteCollection } from "@dicebear/avatars";
 

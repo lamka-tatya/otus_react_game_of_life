@@ -7,8 +7,6 @@ import { store, restore } from "./store";
 describe("On app start", () => {
   let wrapper: ReactWrapper;
   beforeEach(() => {
-    localStorage.clear();
-
     store.dispatch(restore());
 
     wrapper = mount(

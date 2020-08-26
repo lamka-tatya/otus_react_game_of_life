@@ -1,12 +1,9 @@
 import { User, Gender } from "@/modules/Game";
 
-interface AuthService {
-	login: (user: User) => void;
-	getLoggedInUser: () => User | undefined;
-	logout: () => void;
-}
+export class LocalStorageAuthService {
 
-class LocalStorageAuthService implements AuthService {
+	constructor() {}
+
 	readonly userNameKey: string = "userName";
 	readonly userGenderKey: string = "userGender";
 
@@ -37,4 +34,5 @@ class LocalStorageAuthService implements AuthService {
 	}
 }
 
-export const localStorageAuth = new LocalStorageAuthService();
+const localStorageAuth = new LocalStorageAuthService();
+export default localStorageAuth;
