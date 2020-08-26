@@ -1,7 +1,6 @@
 import { gameReducer } from ".";
-import { initGameState, playGame, stopGame, setIsSettingsVisible, reset, setUserpic, setSettings, setField, makeCellAlive, prevStep, nextStep, gameSelectors } from "./gameReducer";
+import { initGameState, playGame, stopGame, setIsSettingsVisible, reset, setUserpic, setSettings, setField, makeCellAlive, prevStep, nextStep } from "./gameReducer";
 import { CellState } from "@/components/Cell";
-import { initialAppState } from "@/store";
 
 describe("Game reducer", () => {
 	it("Play game should set isPlaying to true", () => {

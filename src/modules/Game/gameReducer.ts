@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createSelector } from "reselect";
 import { CellRow, gameSelectors } from ".";
 import { CellState } from "@/components/Cell";
-import { AppState } from "@/store";
 import { GameSettings } from "@/components/SettingsPanel";
 
 export const getRandomField = (settings: GameSettings) => {
