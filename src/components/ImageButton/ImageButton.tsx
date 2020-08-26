@@ -8,8 +8,13 @@ export const ImageButton: FC<{
   onClick?: () => void;
   disabled?: boolean;
   title?: string;
-}> = ({ src, type, onClick, disabled, title }) => (
-  <ButtonStyled type={type} onClick={onClick} disabled={disabled}>
-    <ImageStyled src={src || DefaultImg} disabled={disabled || false} title={title} />
+  name?: string;
+}> = ({ src, type, onClick, disabled, title, name }) => (
+  <ButtonStyled type={type} onClick={onClick} disabled={disabled} name={name}>
+    <ImageStyled
+      src={src || DefaultImg}
+      disabled={disabled || false}
+      title={title}
+    />
   </ButtonStyled>
 );
