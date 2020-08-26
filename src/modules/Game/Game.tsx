@@ -11,13 +11,21 @@ import {
   setIsSettingsVisible,
   reset,
   setSettings,
+  nextStep,
+  prevStep,
+  gameSelectors,
 } from "./gameReducer";
+import { logout } from "@/modules/Auth";
+import { Redirect } from "react-router-dom";
 
 const mapStateToProps = (state: AppState) => ({
   isPlaying: state.game.isPlaying,
   userpic: state.game.userpic,
+  user: state.auth.user,
   isSettingsVisible: state.game.isSettingsVisible,
   gameSettings: state.game.settings,
+  hasNextStep: gameSelectors.hasNextStep(state),
+  hasPrevStep: gameSelectors.hasPrevStep(state),
 });
 
 const mapDispatchToProps = {
@@ -26,6 +34,9 @@ const mapDispatchToProps = {
   setIsSettingsVisible,
   reset,
   setSettings,
+  logout,
+  nextStep,
+  prevStep,
 };
 
 type GameProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -37,12 +48,16 @@ const GameInternal: FC<GameProps> = ({
   setIsSettingsVisible,
   reset,
   userpic,
+  user,
   setSettings,
   gameSettings,
   isSettingsVisible,
+  logout,
+  nextStep,
+  prevStep,
+  hasPrevStep,
+  hasNextStep,
 }) => {
-  const [] = useState(false);
-
   const onClickPlayPause = useCallback(() => {
     isPlaying ? stopGame() : playGame();
   }, [isPlaying, stopGame, playGame]);
@@ -55,9 +70,19 @@ const GameInternal: FC<GameProps> = ({
     reset();
   }, [reset]);
 
-  const onDoLogout = useCallback(() => {}, []);
+  const onClickNext = useCallback(() => {
+    nextStep();
+  }, [nextStep]);
 
-  return (
+  const onClickPrev = useCallback(() => {
+    prevStep();
+  }, [prevStep]);
+
+  const onDoLogout = useCallback(() => {
+    logout();
+  }, [logout]);
+
+  return user ? (
     <>
       <SettingsPanel
         key="settingsWindow"
@@ -69,8 +94,12 @@ const GameInternal: FC<GameProps> = ({
       <GameContainer>
         <MainLayout
           onClickPlayPause={onClickPlayPause}
+          onClickNext={onClickNext}
+          onClickPrev={onClickPrev}
           isPlaying={isPlaying}
-          userName={"Hello!"}
+          userName={user.name}
+          hasPrevStep={hasPrevStep}
+          hasNextStep={hasNextStep}
         />
         <RightSideLayout
           onClickSettings={onClickSettings}
@@ -80,6 +109,8 @@ const GameInternal: FC<GameProps> = ({
         />
       </GameContainer>
     </>
+  ) : (
+    <Redirect to="/" />
   );
 };
 

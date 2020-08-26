@@ -3,3 +3,7 @@ node_modules
 /lib
 /storybook-static
 /.loki/reference/*
+/coverage/lcov-report/src/*
+/.stryker-tmp/*
+/reports/*
+/coverage/*

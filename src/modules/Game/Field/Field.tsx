@@ -43,6 +43,7 @@ const FieldInternal: FC<FieldProps> = ({
         <RowStyled key={rowIndex}>
           {row.cells.map((cell, colIndex) => (
             <Cell
+              name="cell"
               key={colIndex}
               state={cell}
               height={cellHeight}

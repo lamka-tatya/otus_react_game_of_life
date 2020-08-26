@@ -7,8 +7,10 @@ export const Cell: FC<{
   height: number;
   width: number;
   onCellClick: () => void;
-}> = ({state, height, width, onCellClick}) => (
+  name?: string;
+}> = ({ state, height, width, onCellClick, name }) => (
   <CellStyled
+    name={name}
     cellState={state}
     height={height}
     width={width}

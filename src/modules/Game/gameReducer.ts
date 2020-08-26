@@ -47,6 +47,8 @@ export interface GameState {
 	isSettingsVisible: boolean;
 	userpic: string;
 	field: CellRow[];
+	history: CellRow[][];
+	currentHistoryStep: number;
 }
 
 export const initGameState: GameState = {
@@ -55,6 +57,8 @@ export const initGameState: GameState = {
 	isSettingsVisible: false,
 	userpic: "",
 	field: getRandomField(initSettingsState),
+	history: [],
+	currentHistoryStep: -1
 };
 
 const makeCellAliveField = (
@@ -79,6 +83,10 @@ const gameSlice = createSlice({
 	reducers: {
 		playGame(state) {
 			state.isPlaying = true;
+
+			state.history = [state.field];
+			
+			state.currentHistoryStep = 0;
 		},
 		stopGame(state) {
 			state.isPlaying = false;
@@ -88,6 +96,9 @@ const gameSlice = createSlice({
 		},
 		reset(state) {
 			state.field = getRandomField(state.settings);
+
+			state.history = [state.field];
+			state.currentHistoryStep = 0;
 		},
 		setUserpic(state, action) {
 			state.userpic = action.payload;
@@ -95,9 +106,15 @@ const gameSlice = createSlice({
 		setSettings(state, action) {
 			state.settings = action.payload;
 			state.field = getRandomField(action.payload);
+
+			state.history = [state.field];
+			state.currentHistoryStep = 0;
 		},
 		setField(state, action) {
 			state.field = action.payload;
+
+			state.history.push(state.field);
+			state.currentHistoryStep++;
 		},
 		makeCellAlive(state, action) {
 			state.field = makeCellAliveField(
@@ -105,6 +122,23 @@ const gameSlice = createSlice({
 				action.payload.colIndex,
 				action.payload.rowIndex
 			);
+
+			state.history.push(state.field);
+			state.currentHistoryStep++;
+		},
+		nextStep(state) {
+			if (!state.isPlaying && state.currentHistoryStep < state.history.length - 1) {
+
+				state.currentHistoryStep++;
+				state.field = state.history[state.currentHistoryStep];
+			}
+		},
+		prevStep(state) {
+			if (!state.isPlaying && state.currentHistoryStep > 0) {
+
+				state.currentHistoryStep--;
+				state.field = state.history[state.currentHistoryStep];
+			}
 		},
 	},
 });
@@ -118,6 +152,8 @@ export const {
 	setUserpic,
 	setField,
 	makeCellAlive,
+	nextStep,
+	prevStep,
 } = gameSlice.actions;
 export const gameReducer = gameSlice.reducer;
 
@@ -125,6 +161,8 @@ export const gameSelectors = {
 	settings: ({ game }: AppState) => game.settings,
 	field: ({ game }: AppState) => game.field,
 	gameIsPlaying: ({ game }: AppState) => game.isPlaying,
+	hasPrevStep: ({ game }: AppState) => !game.isPlaying && game.currentHistoryStep > 0,
+	hasNextStep: ({ game }: AppState) => !game.isPlaying && game.currentHistoryStep < game.history.length - 1,
 };
 
 const getNextCellState = (oldCell: CellState, neighbours: CellState[]): CellState => {

@@ -20,6 +20,7 @@ export const RightSideLayout: FC<{
     <SettingsContainer>
       <ImageButton
         key="settingsBtn"
+        name="settings"
         src={SettingsImg}
         type="button"
         title="Settings"
@@ -34,12 +35,13 @@ export const RightSideLayout: FC<{
       ></ImageButton>
       <ImageButton
         key="logoutBtn"
+        name="logout"
         src={LogoutImg}
         type="button"
         title="Quit"
         onClick={onLogout}
       ></ImageButton>
     </SettingsContainer>
-    {userPic && <ImageStyled src={userPic}></ImageStyled>}
+    {userPic && <ImageStyled key="userpic" src={userPic}></ImageStyled>}
   </RightSideContainer>
 );

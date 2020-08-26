@@ -1,13 +1,13 @@
 import { expectSaga } from "redux-saga-test-plan";
 import { delay } from "redux-saga/effects";
-import { reducer, initialAppState } from "@/store";
+import { rootReducer, initialAppState } from "@/store";
 import { gameSaga, CellRow } from ".";
 import { setSettings, initSettingsState, playGame, setField, stopGame } from "./gameReducer";
 import { CellState } from "@/components/Cell";
 
 describe("Game saga", () => {
 	const saga = expectSaga(gameSaga).withReducer(
-		reducer,
+		rootReducer,
 		initialAppState
 	);
 	it("should start generating on play", async () => {
