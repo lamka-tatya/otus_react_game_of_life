@@ -3,12 +3,8 @@ import { RowStyled, FieldStyled } from "./Field.styles";
 import { Cell } from "@/components/Cell";
 import { connect } from "react-redux";
 import { AppState } from "@/store";
-import {
-  setField,
-  makeCellAlive,
-  getCellHeight,
-  getCellWidth,
-} from "../gameReducer";
+import { setField, makeCellAlive } from "../gameReducer";
+import { getCellHeight, getCellWidth } from "../gameSelectors";
 
 const mapStateToProps = (state: AppState) => ({
   field: state.game.field,

@@ -8,7 +8,8 @@ import {
 	delay,
 	cancel,
 } from "redux-saga/effects";
-import { setField, gameSelectors, getNextGeneration, playGame, stopGame } from "./gameReducer";
+import { setField, playGame, stopGame } from "./gameReducer";
+import { gameSelectors, getNextGeneration } from "./gameSelectors";
 
 function* playWorker() {
 	while (true) {

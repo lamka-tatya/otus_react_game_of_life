@@ -13,10 +13,10 @@ import {
   setSettings,
   nextStep,
   prevStep,
-  gameSelectors,
 } from "./gameReducer";
 import { logout } from "@/modules/Auth";
 import { Redirect } from "react-router-dom";
+import { gameSelectors } from "./gameSelectors";
 
 const mapStateToProps = (state: AppState) => ({
   isPlaying: state.game.isPlaying,
@@ -24,8 +24,8 @@ const mapStateToProps = (state: AppState) => ({
   user: state.auth.user,
   isSettingsVisible: state.game.isSettingsVisible,
   gameSettings: state.game.settings,
-  hasNextStep: gameSelectors.hasNextStep(state),
-  hasPrevStep: gameSelectors.hasPrevStep(state),
+  hasNextStep: gameSelectors.hasNextStep(state.game),
+  hasPrevStep: gameSelectors.hasPrevStep(state.game),
 });
 
 const mapDispatchToProps = {

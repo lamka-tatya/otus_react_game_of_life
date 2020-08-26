@@ -7,4 +7,4 @@ export { gameReducer }  from "./gameReducer";
 export { initGameState, playGame, stopGame, setIsSettingsVisible, reset, setUserpic, setSettings, setField, makeCellAlive }  from "./gameReducer";
 export { GameState }  from "./gameReducer";
 export { getRandomField }  from "./gameReducer";
-export { gameSelectors }  from "./gameReducer";
+export { gameSelectors }  from "./gameSelectors";
