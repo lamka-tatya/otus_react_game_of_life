@@ -8,10 +8,10 @@ export const FieldStyled = styled.div<{ height: number; width: number }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 3px 3px 4px 2px #0e0e0e61;
+  box-shadow: inset 0px 0px 6px 0px #0e0e0e61;
   overflow: overlay;
   border-radius: 20px;
-  background-color: white;
+  background-color: #f7f7f7;;
 `;
 
 export const RowStyled = styled.div`

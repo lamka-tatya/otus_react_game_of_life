@@ -18,11 +18,14 @@ export const FieldContainer = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
-  background-color: #cccccc;
-  border-right: 2px solid #c3c3c3;
-  border-bottom: 2px solid #c3c3c3;
+  background-color: #ffffff;
+  background: linear-gradient( #ffffff,#b6d8ef70 1px),linear-gradient( 90deg,#ffffff,#b6d8efde 1px);
+  background-size: 10px 10px;
+  background-position: center center;
+  border-right: 2px solid #f3f1f1;
+  border-bottom: 2px solid #f3f1f1;
   border-radius: 0 0 20px 0;
-  box-shadow: 0px 0px 10px 18px #f1f1f1;
+  box-shadow: 4px 4px 14px 12px #f1f1f1;
 `;
 
 export const RightSideContainer = styled.div`
@@ -30,7 +33,7 @@ export const RightSideContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background-color: #ece8e8;
+  background-color: #dedddd;
   width: 80px;
 `;
 
@@ -42,7 +45,7 @@ export const SettingsContainer = styled.div`
 export const BottomContainer = styled.div`
   display: flex;
   height: 80px;
-  background-color: #ece8e8;
+  background-color: #dedddd;
   justify-content: space-between;
   align-items: center;
   font-family: MONOSPACE;

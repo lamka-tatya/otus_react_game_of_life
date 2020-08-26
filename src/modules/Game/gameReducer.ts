@@ -33,12 +33,12 @@ export const getRandomField = (settings: GameSettings) => {
 };
 
 export const initSettingsState: GameSettings = {
-	height: 350,
-	width: 350,
-	rowCount: 10,
-	columnCount: 10,
-	fillingPercent: 30,
-	frequency: 10,
+	height: 600,
+	width: 600,
+	rowCount: 18,
+	columnCount: 18,
+	fillingPercent: 40,
+	frequency: 4,
 };
 
 export interface GameState {

@@ -4,13 +4,12 @@ import { SerializedStyles } from "@emotion/serialize";
 import { CellState } from "./CellState";
 
 const aliveStyle = css`
-  border-color: green;
-  background: green;
+  box-shadow: inset 3px 2px 9px 5px #0e0e0e61;
+  background-color: #14bb00;
 `;
 
 const deadStyle = css`
-  border-color: grey;
-  opacity: 0.5;
+  background-color: white;
 `;
 
 const getStyle: (cellState: CellState) => SerializedStyles = (cellState) => {
@@ -31,7 +30,8 @@ export const CellStyled = styled.button<{
 }>`
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
-  border: 1px solid;
+  border: none;
+
   display: inline-block;
   border-radius: 20px;
   line-height: 25px;
