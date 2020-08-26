@@ -1,7 +1,6 @@
 import { initialAppState, rootReducer, restore, rootSaga } from "./store";
 import { expectSaga } from "redux-saga-test-plan";
-import { gameSaga } from "./modules/Game";
-import { authSaga } from "./modules/Auth/authSaga";
+import { Gender } from "./modules/Game";
 
 describe("Root reducer", () => {
 	it("Restore should set state to initial", () => {
@@ -24,8 +23,8 @@ describe("Root reducer", () => {
 			},
 			auth: {
 				userName: "test",
-				userGender: "male",
-				user: { userName: "test", userGender: "male" }
+				userGender: Gender.male,
+				user: { userName: "test", userGender: Gender.male }
 			}
 		}, restore());
 

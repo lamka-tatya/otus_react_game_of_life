@@ -10,7 +10,7 @@ import {
   setUser,
   getStoredUser,
 } from "@/modules/Auth/authReducer";
-import { Auth } from ".";
+import { Auth } from "./Auth";
 import { initialAppState } from "@/store";
 
 describe("When render auth", () => {

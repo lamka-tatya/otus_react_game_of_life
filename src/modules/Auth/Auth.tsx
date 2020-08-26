@@ -56,7 +56,8 @@ const AuthInternal: FC<AuthProps> = ({
   );
   const onChangeGender = useCallback(
     (e: ChangeEvent) => {
-      setUserGender((e.target as any).value as Gender);
+      const rawGender = (e.target as any).value;
+      setUserGender(Gender[rawGender as keyof typeof Gender]);
     },
     [setUserGender]
   );
@@ -81,7 +82,7 @@ const AuthInternal: FC<AuthProps> = ({
       <GenderContainer>
         <input
           type="radio"
-          checked={userGender === "male"}
+          checked={userGender === Gender.male}
           value="male"
           name="gender"
           onChange={onChangeGender}
@@ -89,7 +90,7 @@ const AuthInternal: FC<AuthProps> = ({
         М
         <input
           type="radio"
-          checked={userGender === "female"}
+          checked={userGender === Gender.female}
           value="female"
           name="gender"
           onChange={onChangeGender}
@@ -97,7 +98,7 @@ const AuthInternal: FC<AuthProps> = ({
         Ж
         <input
           type="radio"
-          checked={userGender === "robot"}
+          checked={userGender === Gender.robot}
           value="robot"
           name="gender"
           onChange={onChangeGender}

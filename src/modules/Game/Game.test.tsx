@@ -1,5 +1,5 @@
 import React from "react";
-import { Game, CellRow } from ".";
+import { Game, Gender } from ".";
 import { mount, ReactWrapper } from "enzyme";
 import configureStore from "redux-mock-store";
 import { Provider } from "react-redux";
@@ -25,10 +25,10 @@ describe("Game tests", () => {
       auth: {
         user: {
           name: "test",
-          gender: "robot",
+          gender: Gender.robot,
         },
         userName: "test",
-        userGender: "robot",
+        userGender: Gender.robot,
       },
     });
 
@@ -108,10 +108,10 @@ describe("Game tests", () => {
       auth: {
         user: {
           name: "test",
-          gender: "robot",
+          gender: Gender.robot,
         },
         userName: "test",
-        userGender: "robot",
+        userGender: Gender.robot,
       },
     });
 
@@ -140,10 +140,10 @@ describe("Game tests", () => {
       auth: {
         user: {
           name: "test",
-          gender: "robot",
+          gender: Gender.robot,
         },
         userName: "test",
-        userGender: "robot",
+        userGender: Gender.robot,
       },
     });
 
@@ -177,10 +177,10 @@ describe("Game tests", () => {
       auth: {
         user: {
           name: "test",
-          gender: "robot",
+          gender: Gender.robot,
         },
         userName: "test",
-        userGender: "robot",
+        userGender: Gender.robot,
       },
     });
 
@@ -212,10 +212,10 @@ describe("Game tests", () => {
       auth: {
         user: {
           name: "test",
-          gender: "robot",
+          gender: Gender.robot,
         },
         userName: "test",
-        userGender: "robot",
+        userGender: Gender.robot,
       },
     });
 
@@ -249,10 +249,10 @@ describe("Game tests", () => {
       auth: {
         user: {
           name: "test",
-          gender: "robot",
+          gender: Gender.robot,
         },
         userName: "test",
-        userGender: "robot",
+        userGender: Gender.robot,
       },
     });
 

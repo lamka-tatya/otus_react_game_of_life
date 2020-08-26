@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Gender, User } from "@/modules/Game";
+import { User } from "@/modules/Game";
+import { Gender } from "../Game/Gender";
 
 export interface AuthState {
 	userName: string;
@@ -9,7 +10,7 @@ export interface AuthState {
 
 export const initAuthState: AuthState = {
 	userName: "",
-	userGender: "robot",
+	userGender: Gender.robot,
 	user: null,
 };
 
@@ -35,7 +36,7 @@ const authSlice = createSlice({
 		getStoredUser(_) { },
 		logout(state) {
 			state.userName = "";
-			state.userGender = "robot";
+			state.userGender = Gender.robot;
 			state.user = null;
 		 },
 	}

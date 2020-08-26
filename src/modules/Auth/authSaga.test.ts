@@ -4,6 +4,7 @@ import { expectSaga } from "redux-saga-test-plan";
 import { call } from "redux-saga/effects";
 import { setUser, getStoredUser, logout } from "./authReducer";
 import localStorageAuth from "./authService";
+import { Gender } from "@/modules/Game";
 jest.mock('./authService');
 
 describe("Auth saga", () => {
@@ -20,8 +21,8 @@ describe("Auth saga", () => {
 
 	it("should set userpic on setUser", async () => {
 		const result = await saga
-			.provide([[call(createAvatar, "robot", "test"), "test svg stub"]])
-			.dispatch(setUser({ name: "test", gender: "robot" }))
+			.provide([[call(createAvatar, Gender.robot, "test"), "test svg stub"]])
+			.dispatch(setUser({ name: "test", gender: Gender.robot }))
 			.run();
 
 		expect(result.storeState.game.userpic).toBe("test svg stub");
@@ -29,8 +30,8 @@ describe("Auth saga", () => {
 
 	it("should not set userpic on setUser if name is not set", async () => {
 		const result = await saga
-			.provide([[call(createAvatar, "robot", ""), "test svg stub"]])
-			.dispatch(setUser({ name: "", gender: "robot" }))
+			.provide([[call(createAvatar, Gender.robot, ""), "test svg stub"]])
+			.dispatch(setUser({ name: "", gender: Gender.robot }))
 			.run();
 
 		expect(result.storeState.game.userpic).toBe("");
@@ -44,23 +45,23 @@ describe("Auth saga", () => {
 
 	it("should set user name and gender to local storage on setUser", async () => {
 		await saga
-			.dispatch(setUser({ name: "test", gender: "female" }))
+			.dispatch(setUser({ name: "test", gender: Gender.female }))
 			.run();
 
 
 		const loginMock = <jest.Mock>(localStorageAuth.login);
-		expect(loginMock).toBeCalledWith({ name: "test", gender: "female" });
+		expect(loginMock).toBeCalledWith({ name: "test", gender: Gender.female });
 	});
 
 	it("should set user name and gender to state form localStorageAuth on getUser", async () => {
-		(localStorageAuth.getLoggedInUser as jest.Mock).mockImplementation(() => { return { name: "userName", gender: "male" } });
+		(localStorageAuth.getLoggedInUser as jest.Mock).mockImplementation(() => { return { name: "userName", gender: Gender.male } });
 
 		const result = await saga
 			.dispatch(getStoredUser())
 			.run();
 
 		expect(result.storeState.auth.userName).toBe("userName");
-		expect(result.storeState.auth.userGender).toBe("male");
+		expect(result.storeState.auth.userGender).toBe(Gender.male);
 	});
 
 	it("should not set user name and gender to state if there is not logged in user", async () => {
@@ -71,12 +72,12 @@ describe("Auth saga", () => {
 			.run();
 
 		expect(result.storeState.auth.userName).toBe("");
-		expect(result.storeState.auth.userGender).toBe("robot");
+		expect(result.storeState.auth.userGender).toBe(Gender.robot);
 	});
 
 	it("should call authService.logout on logout", async () => {
 		await saga
-			.dispatch(setUser({ name: "test", gender: "female" }))
+			.dispatch(setUser({ name: "test", gender: Gender.female }))
 			.dispatch(logout())
 			.run();
 

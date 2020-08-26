@@ -2,18 +2,17 @@ import { User, Gender } from "@/modules/Game";
 
 export class LocalStorageAuthService {
 
-	constructor() {}
+	constructor() { }
 
 	readonly userNameKey: string = "userName";
 	readonly userGenderKey: string = "userGender";
 
 	getLoggedInUser() {
 		const name = localStorage.getItem(this.userNameKey) ?? "";
-		const gender =
-			(localStorage.getItem(this.userGenderKey) as Gender) ?? "robot";
+		const gender = localStorage.getItem(this.userGenderKey) ?? Gender[Gender.robot];
 
 		if (name) {
-			return { name, gender } as User;
+			return { name, gender: Gender[gender as keyof typeof Gender] } as User;
 		}
 
 		return void 0;
@@ -30,7 +29,7 @@ export class LocalStorageAuthService {
 		}
 
 		localStorage.setItem(this.userNameKey, user.name);
-		localStorage.setItem(this.userGenderKey, user.gender);
+		localStorage.setItem(this.userGenderKey, user.gender.toString());
 	}
 }
 

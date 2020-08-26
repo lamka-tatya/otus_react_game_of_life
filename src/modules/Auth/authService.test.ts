@@ -1,10 +1,10 @@
-import { User } from "@/modules/Game";
+import { User, Gender } from "@/modules/Game";
 import localStorageAuth from "./authService";
 
 describe("Auth service", () => {
 	it("should not return stored user if name is empty in localStorage", () => {
 		localStorage.setItem(localStorageAuth.userNameKey, "");
-		localStorage.setItem(localStorageAuth.userGenderKey, "male");
+		localStorage.setItem(localStorageAuth.userGenderKey, Gender[Gender.male]);
 
 		const result = localStorageAuth.getLoggedInUser();
 
@@ -17,24 +17,24 @@ describe("Auth service", () => {
 		});
 
 		it("should not set user to localStorage if name is not set", () => {
-			localStorageAuth.login({ name: "", gender: "male" });
+			localStorageAuth.login({ name: "", gender: Gender.male });
 
 			expect(localStorage.getItem(localStorageAuth.userNameKey)).toBeNull();
 			expect(localStorage.getItem(localStorageAuth.userGenderKey)).toBeNull();
 		});
 
 		it("should set user nmae and gender to localStorage if user is correct", () => {
-			localStorageAuth.login({ name: "name", gender: "female" });
+			localStorageAuth.login({ name: "name", gender: Gender.female });
 
 			expect(localStorage.getItem(localStorageAuth.userNameKey)).toBe("name");
-			expect(localStorage.getItem(localStorageAuth.userGenderKey)).toBe("female");
+			expect(localStorage.getItem(localStorageAuth.userGenderKey)).toBe(Gender.female);
 		});
 	});
 
 	describe("When user is logged in", () => {
 		beforeEach(() => {
 			localStorage.clear();
-			const user: User = { name: "qwe", gender: "female" };
+			const user: User = { name: "qwe", gender: Gender.female };
 			localStorageAuth.login(user);
 		});
 
@@ -42,7 +42,7 @@ describe("Auth service", () => {
 			const loggedUser = localStorageAuth.getLoggedInUser();
 
 			expect(loggedUser?.name).toBe("qwe");
-			expect(loggedUser?.gender).toBe("female");
+			expect(loggedUser?.gender).toBe(Gender.female);
 		});
 
 		describe("and then logout", () => {
