@@ -34,3 +34,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+
+       # Cleanup
+      - name: Cleanup
+        run: rm -rf node_modules/gh-pages/.cache
