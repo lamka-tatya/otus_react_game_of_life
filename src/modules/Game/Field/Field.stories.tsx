@@ -1,6 +1,5 @@
 import React, { FC } from "react";
-import { withKnobs, number } from "@storybook/addon-knobs";
-import { action } from "@storybook/addon-actions";
+import { withKnobs } from "@storybook/addon-knobs";
 import { Field } from "./Field";
 import { CellState } from "@/components/Cell";
 import { Provider } from "react-redux";
