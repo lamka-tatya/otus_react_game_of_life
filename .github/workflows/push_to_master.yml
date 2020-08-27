@@ -32,7 +32,7 @@ jobs:
 
       # Cleanup
       - name: Cleanup
-        run: rm -r -fo node_modules/gh-pages/.cache
+        run: rm -r -fo node_modules/gh-pages/.config
        
        # Deploy  
       - name: Deploy
