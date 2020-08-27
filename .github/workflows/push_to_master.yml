@@ -27,6 +27,7 @@ jobs:
          npm run build 
          git config --global user.email "chernetsova.tatya@gmail.com"
          git config --global user.name "Чернецова Татьяна"
+         git config --global credential.helper wincred
          npm run deploy
        
        # Deploy  
