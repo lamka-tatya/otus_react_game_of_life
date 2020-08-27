@@ -22,6 +22,9 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
+        env:
+         ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+
         run: |
          npm i
          npm run build 
@@ -29,6 +32,9 @@ jobs:
          git config --global user.name "Чернецова Татьяна"
          git config --global credential.helper wincred
          npm run deploy
+
+        with:
+         emptyCommits: true
        
        # Deploy  
       # name: Deploy
