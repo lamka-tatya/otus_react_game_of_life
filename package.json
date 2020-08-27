@@ -15,7 +15,7 @@
 		"storybook": "start-storybook -p 9001",
 		"build-storybook": "build-storybook",
 		"check": "npm run lint && npm run ts:check && npm run test && npm run e2e",
-		"deploy": "gh-pages -d build"
+		"deploy": "gh-pages -d dist"
 	},
 	"lint-staged": {
 		"*.{ts,tsx}": "eslint --fix"
