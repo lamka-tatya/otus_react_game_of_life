@@ -30,11 +30,7 @@ jobs:
          npm i
          npm run build 
 
-      # Cleanup
-      - name: Cleanup
-        run: rm -r -fo node_modules/gh-pages/.config
-       
-       # Deploy  
+      # Deploy  
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
