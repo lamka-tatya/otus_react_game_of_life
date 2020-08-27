@@ -25,6 +25,8 @@ jobs:
         run: |
          npm i
          npm run build 
+         git config --global user.email "chernetsova.tatya@gmail.com"
+         git config --global user.name "Чернецова Татьяна"
          npm run deploy
        
        # Deploy  
