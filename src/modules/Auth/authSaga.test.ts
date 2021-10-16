@@ -1,11 +1,11 @@
-import { authSaga, createAvatar } from "./authSaga";
-import { rootReducer, initialAppState } from "@/store";
-import { expectSaga } from "redux-saga-test-plan";
-import { call } from "redux-saga/effects";
-import { setUser, getStoredUser, logout } from "./authReducer";
-import localStorageAuth from "./authService";
-import { Gender } from "@/modules/Game";
-jest.mock('./authService');
+import { authSaga, createAvatar } from "./authSaga"
+import { rootReducer, initialAppState } from "@/store"
+import { expectSaga } from "redux-saga-test-plan"
+import { call } from "redux-saga/effects"
+import { setUser, getStoredUser, logout } from "./authReducer"
+import localStorageAuth from "./authService"
+import { Gender } from "@/modules/Game"
+jest.mock('./authService')
 
 describe("Auth saga", () => {
 
@@ -85,3 +85,54 @@ describe("Auth saga", () => {
 		expect(logoutMock).toBeCalledTimes(1);
 	});
 });
+
+// @ponicode
+describe("authSaga.createAvatar", () => {
+    test("0", () => {
+        let callFunction: any = () => {
+            authSaga.createAvatar(true, "Michael")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("1", () => {
+        let callFunction: any = () => {
+            authSaga.createAvatar("Female", "Michael")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("2", () => {
+        let callFunction: any = () => {
+            authSaga.createAvatar("Male", "George")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("3", () => {
+        let callFunction: any = () => {
+            authSaga.createAvatar("Male", "Michael")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("4", () => {
+        let callFunction: any = () => {
+            authSaga.createAvatar("Female", "Jean-Philippe")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("5", () => {
+        let callFunction: any = () => {
+            authSaga.createAvatar(false, "")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+})
